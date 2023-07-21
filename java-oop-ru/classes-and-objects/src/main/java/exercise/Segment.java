@@ -1,5 +1,5 @@
 package exercise;
-
+// BEGIN
 public class Segment {
 
     Point p1;
@@ -25,3 +25,4 @@ public class Segment {
         );
     }
 }
+// END

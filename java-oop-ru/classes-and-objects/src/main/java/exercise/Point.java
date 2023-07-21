@@ -1,5 +1,5 @@
 package exercise;
-
+// BEGIN
 public class Point{
 
     int x;
@@ -18,3 +18,4 @@ public class Point{
         return y;
     }
 }
+// END
