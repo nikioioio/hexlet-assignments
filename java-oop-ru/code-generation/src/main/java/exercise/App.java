@@ -11,19 +11,24 @@ import java.nio.file.StandardOpenOption;
 // BEGIN
 public class App {
 
-    @SneakyThrows
+
     public static void save(Path path, Car car){
-        BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8, StandardOpenOption.CREATE);
-        writer.write(car.serialize());
-        writer.flush();
+        try (BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8, StandardOpenOption.CREATE)){
+            writer.write(car.serialize());
+            writer.flush();
+        }catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        
 
 
     }
-    @SneakyThrows
-    public static Car extract(Path path){
 
-            BufferedReader br = Files.newBufferedReader(path);
-            StringBuilder sb = new StringBuilder();
+    public static Car extract(Path path){
+        StringBuilder sb = new StringBuilder();
+        try( BufferedReader br = Files.newBufferedReader(path)){
+
             String line = br.readLine();
 
             while (line != null) {
@@ -31,6 +36,10 @@ public class App {
                 sb.append(System.lineSeparator());
                 line = br.readLine();
             }
+        }catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
 
         return Car.unserialize(sb.toString());
     }
