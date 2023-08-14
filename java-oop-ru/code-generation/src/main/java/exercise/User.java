@@ -7,6 +7,7 @@ import lombok.Value;
 // BEGIN
 @AllArgsConstructor
 @Getter
+@Value
 // END
 class User {
     int id;
