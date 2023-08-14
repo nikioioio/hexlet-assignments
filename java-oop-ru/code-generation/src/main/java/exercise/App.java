@@ -2,10 +2,8 @@ package exercise;
 
 import lombok.SneakyThrows;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
@@ -13,21 +11,18 @@ import java.nio.file.StandardOpenOption;
 // BEGIN
 public class App {
 
+    @SneakyThrows
     public static void save(Path path, Car car){
-        String serialazed = car.serialize();
-        try {
-            FileWriter fw = new FileWriter(path.toString());
-            fw.write(serialazed);
-            fw.close();
-        }catch (IOException e){
-            System.out.println("Error");
-        }
+        BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8, StandardOpenOption.CREATE);
+        writer.write(car.serialize());
+        writer.flush();
+
 
     }
     @SneakyThrows
     public static Car extract(Path path){
 
-            BufferedReader br = new BufferedReader(new FileReader(path.toString()));
+            BufferedReader br = Files.newBufferedReader(path);
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
 
